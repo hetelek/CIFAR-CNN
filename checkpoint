@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/SHETELEKIDES/Desktop/conv/saved_model.ckpt"
+all_model_checkpoint_paths: "/Users/SHETELEKIDES/Desktop/conv/saved_model.ckpt"
