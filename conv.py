@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser(description='Trains or evaluates a convolutiona
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-e', '--evaluate', action='store_true')
 group.add_argument('-t', '--train', action='store_true')
+group.add_argument('-i', '--interactive', type=int)
 args = parser.parse_args()
 
 BATCH_SIZE = 100
@@ -151,11 +152,15 @@ with tf.Session() as sess:
         save_path = saver.save(sess, SAVE_NAME)
         print 'Saved to {0}'.format(save_path)
         print '----------------'
-  elif args.evaluate:
-    interactive = False
-
-    num_of_tests = cifar_data.get_test_size()
-    print 'Running tests.'
+  elif args.evaluate or args.interactive is not None:
+    if args.interactive is not None:
+      interactive = True
+      num_of_tests = args.interactive
+      print 'Entering interactive mode.'
+    else:
+      interactive = False
+      num_of_tests = cifar_data.get_test_size()
+      print 'Running tests.'
 
     test_images, test_labels = cifar_data.random_test_batch(num_of_tests) #get_random_batch(data_test, labels_test, num_of_tests)
     correct = 0.0
